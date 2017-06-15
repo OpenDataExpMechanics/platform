@@ -5,19 +5,66 @@ $def with (page)
     <title>Open Data for Experimental Mechnaics (ODEM)</title>
     <style>
         #menu {
-            width: 200px;
+           width: 10%;
             float: right;
+            margin-top: 8px;
         }
+        
+          .contact {
+           width: 100%;
+           float: right;
+           margin-top: 8px;
+           background-color:  #aeb6bf ;
+           margin-left: 8px;
+        }
+        
+    .logo{
+    float: left;
+    
+    }
+        
+    .header {
+    background-color:  #aeb6bf ;
+    color: white;
+    padding: 5px;
+}
+
+.content {
+    width: 85%;
+     padding: 5px;
+}
+
+.column {
+    float: left;
+    padding: 15px;
+}
+
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
-	<h1>Open Data for Experimental Mechanics</h1>
-<ul id="menu">
-    <li><a href="/">Home</a></li>
-    <li><a href="/register">Sign in/up</a></li>
-</ul>
 
+<div class="header">
+<h1>Open Data for Experimental Mechanics</h1>
+</div>
+
+	
+	
+<div class="list-group" id="menu">
+  <i class="fa fa-home fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/">Home</a><br>
+  <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/register">Log in</a>
+  
+</div>	
+
+<div class="content column">
 $:page
+</div>
 
+<div class="contact">
+<a href="https://github.com/OpenDataExpMechanics"><i class="fa fa-github" aria-hidden="true"></i> </a>
+<a href="mailto:opendataexpmechanics@googlegroups.com"><i class="fa fa-envelope" aria-hidden="true"></i> </a>
+</div>
 </body>
 </html>
