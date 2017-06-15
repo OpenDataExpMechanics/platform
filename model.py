@@ -19,3 +19,7 @@ class model():
             self.session.loggedin = True
             self.session.username = name
         return self.render.index()
+
+    #def register(name,mail,pw1,pw2):
+        
+      
