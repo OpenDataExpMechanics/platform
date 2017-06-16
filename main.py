@@ -1,7 +1,7 @@
 import web
 import model
 
-web.config.debug = True
+web.config.debug = False
 
 
 urls = (
@@ -10,21 +10,21 @@ urls = (
         '/register' , 'Register'
         )
 
-### Templates
-t_globals = {
-    'datestr': web.datestr
-}
-
-#render = web.template.render('templates',base='base', globals=t_globals)
 
 # Object handling the session of a user
 app = web.application(urls, locals())
-store = web.session.DiskStore('sessions')
-session = web.session.Session(app,store,initializer={'login': 0,'privilege': 0,'user':'anonymous','loggedin':False})
+
+### Global variables
+t_globals = {
+    'datestr': web.datestr,
+}
+
+
+
 
 render = web.template.render('templates',base='base', globals=t_globals)
 
-data = model.model(session,render)
+data = model.model(render)
 
 class Index:
     def GET(self):
@@ -64,14 +64,15 @@ class Register:
         web.form.Textbox('Username', web.form.notnull,
             size=30,
             description="User:"),
-        web.form.Textbox('EMail', web.form.notnull,
+        web.form.Textbox('EMail', web.form.notnull, web.form.regexp('[^@]+@[^@]+\.[^@]+', 'Must be in form of *@*.*'),
             size=30,
             description="E-Mail:"),
-        web.form.Password('Password', web.form.notnull,
+        web.form.Password('Password', web.form.Validator('Must be more at least 8 charcters long', lambda x:int(x)>7),
             description="Password:"),
-         web.form.Password('PasswordRepeated', web.form.notnull,
-            description="Repet password:"),
+         web.form.Password('PasswordRepeated',web.form.Validator('Must be more at least 8 charcters long', lambda x:int(x)>7),
+            description="Repeat password:"),
         web.form.Button('send'),
+        validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated)],
     )
 
     def GET(self):
@@ -83,7 +84,7 @@ class Register:
         if not form.validates():
             return render.register(form)
         #data.login(form.d.Username,form.d.Password)
-        raise web.seeother('/')
+        #raise web.seeother('/')
     
 
 if __name__ == "__main__":
