@@ -7,16 +7,25 @@ web.config.debug = False
 urls = (
         '/' , 'Index' ,
         '/login' , 'Login',
-        '/register' , 'Register'
+        '/register' , 'Register' ,
+        '/logout' , 'Logout'
         )
 
 
 # Object handling the session of a user
-app = web.application(urls, locals())
+app = web.application(urls, globals())
+if web.config.get('_session') is None:
+    session = web.session.Session(app,web.session.DiskStore('sessions'),initializer=  {'t_user': '', 't_auth':False,'t_level':0})
+    web.config._session = session
+else: 
+    session = web.config._session
+
+
 
 ### Global variables
 t_globals = {
     'datestr': web.datestr,
+    'session' : session
 }
 
 
@@ -24,7 +33,7 @@ t_globals = {
 
 render = web.template.render('templates',base='base', globals=t_globals)
 
-data = model.model(render)
+data = model.model(render,session)
 
 class Index:
     def GET(self):
@@ -85,8 +94,14 @@ class Register:
             return render.register(form)
         #data.login(form.d.Username,form.d.Password)
         #raise web.seeother('/')
-    
+
+##############################################################################
+# Logout
+##############################################################################
+class Logout:
+    def GET(self):
+        session.kill()
+        raise web.seeother('/')
 
 if __name__ == "__main__":
-    app = web.application(urls, globals())
     app.run()

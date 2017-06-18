@@ -56,7 +56,10 @@ $def with (page)
 	
 <div class="list-group" id="menu">
   <i class="fa fa-home fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/">Home</a><br>
-  <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/login">Log in</a>
+  $if session.get('t_auth') == False:
+    <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/login">Log in</a>
+  $else:
+    <i class="fa fa-sign-out  fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/logout">Log out</a>
   
 </div>	
 
@@ -68,7 +71,9 @@ $:page
 <div class="list-group">
 <i class="fa fa-home fa-github" aria-hidden="true"></i><a class="list-group-item" href="https://github.com/OpenDataExpMechanics">Github</a>
 <i class="fa fa-home fa-envelope" aria-hidden="true"></i><a class="list-group-item" href="mailto:opendataexpmechanics@googlegroups.com">Mail</a>
-<i class="fa fa-home fa-newspaper-o " aria-hidden="true"></i><a class="list-group-item" href="https://opendataexpmechanics.github.io/">Blog</a>
+<i class="fa fa-home fa-newspaper-o " aria-hidden="true"></i><a class="list-group-item" href="https://opendataexpmechanics.github.io/">Blog</a>  
+$if session.get('t_auth') == True:
+    Login as $session.get('t_user')
 </div>
 </div>	
 </body>
