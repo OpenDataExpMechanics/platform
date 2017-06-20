@@ -11,15 +11,16 @@ class model():
 
     def login(self,name, pw):
 
-        
+		try:
+			data = db.select('users' , where='name=$name' , vars=locals())[0]
+		except:
+			return False
 
-        data = db.select('users' , where='name=$name' , vars=locals())[0]['password']
-        print data
-        #if pw == pw:
-        self.session.t_user = name 
-        self.session.t_auth = True
-        return self.render.index()
+		if pw == data['password']:
+			self.session.t_user = name 
+			self.session.t_auth = True
 
+		return True
     #def register(name,mail,pw1,pw2):
         
       

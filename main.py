@@ -61,8 +61,11 @@ class Login:
         form = self.form()
         if not form.validates():
             return render.login(form)
-        data.login(form.d.Username,form.d.Password)
-        raise web.seeother('/')
+
+	if data.login(form.d.Username,form.d.Password):
+	    return render.index()
+	else:
+	    return render.login(form,True)
     
 ##############################################################################
 # Register
