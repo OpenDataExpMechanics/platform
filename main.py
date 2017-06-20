@@ -84,7 +84,8 @@ class Register:
          web.form.Password('PasswordRepeated',web.form.Validator('Must be more at least 8 charcters long', lambda x:int(x)>7),
             description="Repeat password:"),
         web.form.Button('send'),
-        validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated)],
+        validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated),
+			web.form.Validator("Username already exists.", lambda i: data.getUser(i.Username) == False )  ],
     )
 
     def GET(self):
@@ -95,8 +96,9 @@ class Register:
         form = self.form()
         if not form.validates():
             return render.register(form)
-        #data.login(form.d.Username,form.d.Password)
-        #raise web.seeother('/')
+        else:
+            data.register(form.i.Username,form.i.Password)
+	   
 
 ##############################################################################
 # Logout

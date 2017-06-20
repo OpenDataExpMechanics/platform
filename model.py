@@ -21,6 +21,17 @@ class model():
 			self.session.t_auth = True
 
 		return True
-    #def register(name,mail,pw1,pw2):
+    def register(name,mail,pw):
+		
+		db.insert('users',name=name,password=pw)
         
-      
+    def getUser(self,user):
+
+		try:
+			data = db.select('users' , where='name=$name' , vars=locals())[0]
+		except:
+			return True
+
+		return False
+
+   
