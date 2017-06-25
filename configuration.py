@@ -9,3 +9,4 @@ class configuration:
             self.database= doc["Database"]["Database"]
             self.password= doc["Database"]["Password"]
             self.dbType= doc["Database"]["Type"]
+            self.host= doc["Database"]["Host"]

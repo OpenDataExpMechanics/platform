@@ -5,7 +5,7 @@ import md5
 conf = conf.configuration()
 
 
-db = web.database(dbn=conf.dbType , db=conf.database, pw=conf.password, user=conf.username,host="marvin")
+db = web.database(dbn=conf.dbType , db=conf.database, pw=conf.password, user=conf.username,host=conf.host)
 
 
 class model():
