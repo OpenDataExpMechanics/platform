@@ -1,6 +1,11 @@
 import web , datetime
+import configuration as conf
+import md5
 
-db = web.database(dbn='sqlite' , db='user.db')
+conf = conf.configuration()
+
+
+db = web.database(dbn=conf.dbType , db=conf.database, pw=conf.password, user=conf.username,host="marvin")
 
 
 class model():
@@ -21,17 +26,28 @@ class model():
 			self.session.t_auth = True
 
 		return True
-    def register(name,mail,pw):
-		
-		db.insert('users',name=name,password=pw)
+            
+    def register(self,name,mail,pw):
+		try:
+                    db.insert('users',name=name,password=md5.md5(pw).hexdigest(),mail=mail)
+                except:
+                    return False
+                
+                self.session.t_user = name 
+                self.session.t_auth = True
+                
+                return True
         
     def getUser(self,user):
 
-		try:
-			data = db.select('users' , where='name=$name' , vars=locals())[0]
-		except:
-			return True
-
-		return False
+                try:
+                    data = db.select('users' , where='name=$name' , vars=locals())[0]
+                except:
+                    return False
+		
+                if data['name'] == user:
+                    return True
+                
+                return False
 
    

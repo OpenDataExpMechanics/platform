@@ -1,6 +1,10 @@
-$def with(form)
+$def with(form,error=False)
 
 <h4>Register</h4>
 <form action="" method="post">
 $:form.render()
 </form>
+$if error:
+	<div class="error">
+	Error with registration
+	</div>

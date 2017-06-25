@@ -1,6 +1,6 @@
 import web
 import model
-
+import md5
 web.config.debug = False
 
 
@@ -62,7 +62,7 @@ class Login:
         if not form.validates():
             return render.login(form)
 
-	if data.login(form.d.Username,form.d.Password):
+	if data.login(form.d.Username,md5.md5(form.d.Password).hexdigest()):
 	    return render.index()
 	else:
 	    return render.login(form,True)
@@ -85,7 +85,7 @@ class Register:
             description="Repeat password:"),
         web.form.Button('send'),
         validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated),
-			web.form.Validator("Username already exists.", lambda i: data.getUser(i.Username) == False )  ],
+			 ],
     )
 
     def GET(self):
@@ -97,7 +97,11 @@ class Register:
         if not form.validates():
             return render.register(form)
         else:
-            data.register(form.i.Username,form.i.Password)
+            res = data.register(form.d.Username,form.d.EMail,form.d.Password)
+            if res:
+                return render.index()
+            else:
+                return render.register(form,True)
 	   
 
 ##############################################################################
