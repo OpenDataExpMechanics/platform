@@ -24,17 +24,20 @@ class model():
 		if pw == data['password']:
 			self.session.t_user = name 
 			self.session.t_auth = True
+			self.session.t_id = data['id']
 
 		return True
             
     def register(self,name,mail,pw):
 		try:
                     db.insert('users',name=name,password=md5.md5(pw).hexdigest(),mail=mail)
+                    data = db.select('users' , where='name=$name' , vars=locals())[0]
                 except:
                     return False
                 
                 self.session.t_user = name 
                 self.session.t_auth = True
+                self.session.t_id = data['id']
                 
                 return True
         
@@ -49,5 +52,11 @@ class model():
                     return True
                 
                 return False
+            
+    def new(self,title,content,link):
+		try:
+                    db.insert('datasets',title=title,link=link,user=self.session.t_id,content=content)
+                except:
+                    return False
 
-   
+                return True

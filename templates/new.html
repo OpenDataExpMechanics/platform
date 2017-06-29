@@ -1,0 +1,11 @@
+$def with (form,error=False)
+
+<h3>New data set</h3>
+<form action="" method="post">
+$:form.render()
+</form>
+$if error:
+	<div class="error">
+	Error while posting the data set
+	</div>
+

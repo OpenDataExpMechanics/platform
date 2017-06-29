@@ -63,9 +63,11 @@ $def with (page)
   $if session.get('t_auth') == False:
     <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/login">Log in</a>
   $else:
-    <i class="fa fa-sign-out  fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/logout">Log out</a>
+    <i class="fa fa-plus  fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/new">New</a><br>
+    <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/data">My data</a><br>
+    <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/logout">Log out</a>
   
-</div>	
+</div>	  
 
 <div class="content column">
 $:page
