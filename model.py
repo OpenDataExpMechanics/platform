@@ -44,7 +44,8 @@ class model():
     def getUser(self,user):
 
                 try:
-                    data = db.select('users' , where='name=$name' , vars=locals())[0]
+                    user = dict(name=user)
+                    data = db.select('users' , user, where='name=$name' , vars=locals())[0]
                 except:
                     return False
 		
@@ -60,3 +61,11 @@ class model():
                     return False
 
                 return True
+            
+    def getPosts(self):
+         userID = dict(user=self.session.t_id)
+         return db.select('datasets', userID, order='id DESC' , where='user=$user')
+     
+    def deletePost(self,ID):
+        var = dict(user=self.session.t_id,id=ID)
+        db.delete('datasets', where="id=$id AND user=$user", vars=var)

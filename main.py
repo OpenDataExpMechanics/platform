@@ -11,6 +11,7 @@ urls = (
         '/logout' , 'Logout' ,
         '/data' , 'Data' ,
         '/new' , 'New' ,
+        '/delete/(\d+)' , 'Delete' ,
         )
 
 
@@ -115,11 +116,20 @@ class Logout:
         raise web.seeother('/')
     
 ##############################################################################
+# Delete
+##############################################################################
+class Delete:
+    def POST(self,postID):
+        data.deletePost(int(postID))
+        raise web.seeother('/data')
+    
+##############################################################################
 # Show data sets
 ##############################################################################
 class Data:
     def GET(self):
-        return render.data()
+        posts = data.getPosts()
+        return render.data(posts)
     
 ##############################################################################
 # Insert new data set
@@ -150,8 +160,7 @@ class New:
         else:
             res = data.new(form.d.title,form.d.content,form.d.link)
             if res:
-                
-                return render.data()
+                raise web.seeother('/data')
             else:
                 return render.new(form,True)
     

@@ -1,2 +1,24 @@
-$def with ()
+$def with (posts)
+
+<h3>Your data sets</h3>
+
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+$for post in posts:
+    <tr>
+        <td>$post.title</td>
+        <td></td>
+        <td>
+            <form action="/delete/$post.id" method="post">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
+    </tr>
+</table>
+
 
