@@ -60,6 +60,7 @@ $def with (page)
 	
 <div class="list-group" id="menu">
   <i class="fa fa-home fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/">Home</a><br>
+  <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/list">All data</a>
   $if session.get('t_auth') == False:
     <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/login">Log in</a>
   $else:

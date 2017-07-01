@@ -66,6 +66,13 @@ class model():
          userID = dict(user=self.session.t_id)
          return db.select('datasets', userID, order='id DESC' , where='user=$user')
      
+    def getPost(self,postID):
+        post = dict(id=postID)
+        return db.select('datasets', post, where='id=$id')
+    
+    def getAllPosts(self):
+         return db.select('datasets',  order='id DESC' )
+     
     def deletePost(self,ID):
         var = dict(user=self.session.t_id,id=ID)
         db.delete('datasets', where="id=$id AND user=$user", vars=var)

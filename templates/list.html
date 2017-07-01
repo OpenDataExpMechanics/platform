@@ -1,0 +1,16 @@
+$def with (posts)
+
+<h3>Data sets</h3>
+
+
+<table>
+  <tr>
+    <th>Title</th>
+  </tr>
+$for post in posts:
+    <tr>
+        <td><a href="/show/$post.id" >$post.title</a></td>
+    </tr>
+</table>
+
+

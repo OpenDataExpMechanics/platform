@@ -12,6 +12,9 @@ urls = (
         '/data' , 'Data' ,
         '/new' , 'New' ,
         '/delete/(\d+)' , 'Delete' ,
+        '/list' , 'List' ,
+        '/edit/(\d+)' , 'Edit' ,
+        '/show/(\d+)' , 'Show' ,
         )
 
 
@@ -124,12 +127,28 @@ class Delete:
         raise web.seeother('/data')
     
 ##############################################################################
-# Show data sets
+# Show data sets of a specific user
 ##############################################################################
 class Data:
     def GET(self):
         posts = data.getPosts()
         return render.data(posts)
+    
+##############################################################################
+# Show data sets
+##############################################################################
+class List:
+    def GET(self):
+        posts = data.getAllPosts()
+        return render.list(posts)
+    
+##############################################################################
+# Show full data set
+##############################################################################
+class Show:
+    def GET(self,postID):
+        posts = data.getPost(int(postID))
+        return render.show(posts)
     
 ##############################################################################
 # Insert new data set
