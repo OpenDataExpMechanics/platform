@@ -2,6 +2,8 @@ CREATE USER 'odem'@'localhost' IDENTIFIED BY 'password';
 
 CREATE DATABASE odem;
 
+USE odem;
+
 CREATE TABLE IF NOT EXISTS `users` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL,
@@ -19,3 +21,6 @@ CREATE TABLE IF NOT EXISTS `datasets` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+GRANT ALL PRIVILEGES ON odem.* TO 'odem'@'localhost' WITH GRANT OPTION;
+
+FLUSH privileges;quit
