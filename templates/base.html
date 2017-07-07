@@ -23,6 +23,12 @@ $def with (page)
     .container {
         padding-top: 20px;
     }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,33 +36,36 @@ $def with (page)
 </head>
 <body>
 
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <img class ="logo-image" src="./assets/logo-highq.png" width=50><a class="navbar-brand" href="#">Open Data for Experimental Mechanics</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-          <a class="list-group-item" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+    <ul class="navbar-nav">
+        $if page == '/':
+            <li class="nav-item active">
+        $else:
+            <li class="nav-item">
+          <a class="nav-link" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
       </li>
       <li class="nav-item">
-          <a class="list-group-item" href="/list"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>All data</a>
+          <a class="nav-link" href="/list"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>All data</a>
       </li>
       $if session.get('t_auth') == False:
           <li class="nav-item">
-              <a class="list-group-item" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Log in</a>
+              <a class="nav-link" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Log in</a>
           </li>
       $else:
         <li class="nav-item">
-            <a class="list-group-item" href="/new"><i class="fa fa-plus  fa-fw" aria-hidden="true"></i>New</a><br>
+            <a class="nav-link" href="/new"><i class="fa fa-plus  fa-fw" aria-hidden="true"></i>New</a><br>
         </li>
         <li class="nav-item">
-            <a class="list-group-item" href="/data"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>My data</a><br>
+            <a class="nav-link" href="/data"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>My data</a><br>
         </li>
         <li class="nav-item">
-            <a class="list-group-item" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Log out</a>
+            <a class="nav-link" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Log out</a>
         </li>
     </ul>
   </div>
@@ -66,11 +75,11 @@ $def with (page)
 $:page
 </div>
 
-<div>
-    <nav class="nav">
-        <a class="nav-link active" href="https://github.com/OpenDataExpMechanics"><i class="fa fa-home fa-github" aria-hidden="true"></i>Github</a>
-        <a class="nav-link active" href="mailto:opendataexpmechanics@googlegroups.com"><i class="fa fa-home fa-envelope" aria-hidden="true"></i>Mail</a>
-        <a class="nav-link active" href="https://opendataexpmechanics.github.io/"><i class="fa fa-home fa-newspaper-o" aria-hidden="true"></i>Blog</a>
+<div class="footer">
+    <nav class="nav bg-inverse">
+        <a class="nav-link" href="https://github.com/OpenDataExpMechanics"><i class="fa fa-home fa-github" aria-hidden="true"></i> Github</a>
+        <a class="nav-link" href="mailto:opendataexpmechanics@googlegroups.com"><i class="fa fa-home fa-envelope" aria-hidden="true"></i> Mail</a>
+        <a class="nav-link" href="https://opendataexpmechanics.github.io/"><i class="fa fa-home fa-newspaper-o" aria-hidden="true"></i> Blog</a>
     </nav>
 
 
