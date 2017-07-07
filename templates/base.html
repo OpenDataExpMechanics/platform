@@ -4,60 +4,35 @@ $def with (page)
 <head>
     <title>Open Data for Experimental Mechnaics (ODEM)</title>
     <style>
-        #menu {
-           width: 10%;
-            float: right;
-            margin-top: 8px;
-        }
-        
-          .contact {
-           border-radius: 25px;
-           width: 100%;
-           float: right;
-           margin-top: 8px;
-           background-color:  #aeb6bf ;
-           margin-left: 8px;
-        }
-        
-    .logo{
-    float: left;
-    
+
+    .green{
+        color: #0b6b1e;
     }
-        
-    .header {
-     border-radius: 25px;
-    background-color:  #aeb6bf ;
-    color: white;
-    padding: 5px;
-}
+
+    .green-background{
+        background-color: #0b6b1e;
+    }
 
 .error{
-    color: red;	
-}
-
-.content {
-    width: 85%;
-     padding: 5px;
-}
-
-.column {
-    float: left;
-    padding: 15px;
+    color: red;
 }
 
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
 </head>
 <body>
 
-<div class="header">
+
+
+<div class="green-background">
 <h1>Open Data for Experimental Mechanics</h1>
 </div>
 
-	
-	
+
+
 <div class="list-group" id="menu">
   <i class="fa fa-home fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/">Home</a><br>
   <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/list">All data</a>
@@ -67,21 +42,24 @@ $def with (page)
     <i class="fa fa-plus  fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/new">New</a><br>
     <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/data">My data</a><br>
     <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/logout">Log out</a>
-  
-</div>	  
+
+</div>
 
 <div class="content column">
 $:page
 </div>
 
 <div class="contact">
-<div class="list-group">
-<i class="fa fa-home fa-github" aria-hidden="true"></i><a class="list-group-item" href="https://github.com/OpenDataExpMechanics">Github</a>
-<i class="fa fa-home fa-envelope" aria-hidden="true"></i><a class="list-group-item" href="mailto:opendataexpmechanics@googlegroups.com">Mail</a>
-<i class="fa fa-home fa-newspaper-o " aria-hidden="true"></i><a class="list-group-item" href="https://opendataexpmechanics.github.io/">Blog</a>  
+    <nav class="nav">
+        <a class="nav-link active" href="https://github.com/OpenDataExpMechanics"><i class="fa fa-home fa-github" aria-hidden="true"></i>Github</a>
+        <a class="nav-link active" href="mailto:opendataexpmechanics@googlegroups.com"><i class="fa fa-home fa-envelope" aria-hidden="true"></i>Mail</a>
+        <a class="nav-link active" href="https://opendataexpmechanics.github.io/"><i class="fa fa-home fa-newspaper-o" aria-hidden="true"></i>Blog</a>
+    </nav>
+
+
 $if session.get('t_auth') == True:
     Login as $session.get('t_user')
+
 </div>
-</div>	
 </body>
 </html>

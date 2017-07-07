@@ -1,11 +1,11 @@
 $def with(form,error=False)
 
 <h4>Log in</h4>
-<form action="" method="post">
+<form action="" method="post" class="form-group">
 $:form.render()
 </form>
 $if error:
 	<div class="error">
-	Error: username and password do not match 
+	Error: username and password do not match
 	</div>
 For uploading data and comment on data you have to <a href="/register">sign up</a>.
