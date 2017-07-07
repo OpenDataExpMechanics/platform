@@ -4,7 +4,6 @@ $def with (page)
 <head>
     <title>Open Data for Experimental Mechnaics (ODEM)</title>
     <style>
-
     .green{
         color: #0b6b1e;
     }
@@ -13,43 +12,57 @@ $def with (page)
         background-color: #0b6b1e;
     }
 
-.error{
-    color: red;
-}
+    .error{
+        color: red;
+    }
 
+    .container {
+        padding-top: 20px;
+    }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
 </head>
 <body>
 
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Open Data for Experimental Mechanics</a>
 
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+          <a class="list-group-item" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+      </li>
+      <li class="nav-item">
+          <a class="list-group-item" href="/list"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>All data</a>
+      </li>
+      $if session.get('t_auth') == False:
+          <li class="nav-item">
+              <a class="list-group-item" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Log in</a>
+          </li>
+      $else:
+        <li class="nav-item">
+            <a class="list-group-item" href="/new"><i class="fa fa-plus  fa-fw" aria-hidden="true"></i>New</a><br>
+        </li>
+        <li class="nav-item">
+            <a class="list-group-item" href="/data"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>My data</a><br>
+        </li>
+        <li class="nav-item">
+            <a class="list-group-item" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Log out</a>
+        </li>
+    </ul>
+  </div>
+</nav>
 
-<div class="green-background">
-<h1>Open Data for Experimental Mechanics</h1>
-</div>
-
-
-
-<div class="list-group" id="menu">
-  <i class="fa fa-home fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/">Home</a><br>
-  <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/list">All data</a>
-  $if session.get('t_auth') == False:
-    <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/login">Log in</a>
-  $else:
-    <i class="fa fa-plus  fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/new">New</a><br>
-    <i class="fa fa-folder fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/data">My data</a><br>
-    <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i><a class="list-group-item" href="/logout">Log out</a>
-
-</div>
-
-<div class="content column">
+<div class="container">
 $:page
 </div>
 
-<div class="contact">
+<div>
     <nav class="nav">
         <a class="nav-link active" href="https://github.com/OpenDataExpMechanics"><i class="fa fa-home fa-github" aria-hidden="true"></i>Github</a>
         <a class="nav-link active" href="mailto:opendataexpmechanics@googlegroups.com"><i class="fa fa-home fa-envelope" aria-hidden="true"></i>Mail</a>
@@ -58,8 +71,11 @@ $:page
 
 
 $if session.get('t_auth') == True:
-    Login as $session.get('t_user')
+    Logged in as $session.get('t_user')
 
 </div>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
