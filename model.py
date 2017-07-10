@@ -76,3 +76,7 @@ class model():
     def deletePost(self,ID):
         var = dict(user=self.session.t_id,id=ID)
         db.delete('datasets', where="id=$id AND user=$user", vars=var)
+        
+    def updatePost(self,postID,title,content,link):
+        db.update('datasets', where="id=$postID", vars=locals(),
+        title=title, content=content,link=link)

@@ -1,0 +1,11 @@
+$def with (posts,form,error=False)
+
+<h3>Edit data set</h3>
+<form action="" method="post" class="form-group">
+$:form.render()
+</form>
+$if error:
+	<div class="error">
+	Error while posting the data set
+	</div>
+<a href="/data">Back</a>

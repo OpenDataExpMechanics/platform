@@ -183,6 +183,42 @@ class New:
                 raise web.seeother('/data')
             else:
                 return render.new(form,True)
+    
+##############################################################################
+# Edit data set
+##############################################################################
+class Edit:
+    form = web.form.Form(
+        web.form.Textbox('title', web.form.notnull,
+            size=30,
+            description="Title of the data set:"),
+        web.form.Textarea('content', web.form.notnull,
+            rows=10, cols=80,
+            description="Description of the data set:"),
+        web.form.Textbox('link', web.form.notnull,
+            size=30,
+            description="Link to the data set:"),
+        web.form.Button('Save changes')
+    )
+    
+    def GET(self,postID):
+        posts = data.getPost(int(postID))[0]
+        form = self.form()
+        form.fill(posts)
+        return render.edit(posts,form)
+    
+    def POST(self,postID):
+        posts = data.getPost(int(postID))[0]
+        form = self.form()
+        form.fill(posts)
+        if not form.validates():
+            return render.edit(posts, form)
+        data.updatePost(int(postID),form.d.title,form.d.content,
+            form.d.link)
+        posts = data.getPosts()
+        return render.data(posts)
+            
+            
 ##############################################################################
 # Serve images
 ##############################################################################
