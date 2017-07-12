@@ -20,8 +20,6 @@ class model():
         ## Connector to the databse
         self.db = web.database(dbn=self.conf.dbType , db=self.conf.database, pw=self.conf.password, user=self.conf.username,host=self.conf.host)
 
-        
-
     ## Login
     # @param name Username
     # @param pw Password
@@ -46,33 +44,34 @@ class model():
     # @param pw Password
     # @return Registration succesfull
     def register(self,name,mail,pw):
+        
 		try:
+                    
+                    if self.getUser(name) == True:
+                        return 2
+                    
                     self.db.insert('users',name=name,password=md5.md5(pw).hexdigest(),mail=mail)
                     data = self.db.select('users' , where='name=$name' , vars=locals())[0]
                 except:
-                    return False
+                    return 1
                 
                 self.session.t_user = name 
                 self.session.t_auth = True
                 self.session.t_id = data['id']
                 
-                return True
+                return 0
     ## Check if username exists
     # @param user Username to validate
     # @return User exists
     def getUser(self,user):
 
-                try:
-                    user = dict(name=user)
-                    data = self.db.select('users' , user, where='name=$name' , vars=locals())[0]
-                except:
-                    return False
-		
-                if data['name'] == user:
+                data = self.db.query("SELECT count(*) as count FROM users WHERE name=$name LIMIT 1", vars={'name':user})[0]
+              
+                if data['count'] == 1:
                     return True
-                
-                return False
-    
+                else:
+                    return False
+         
     ## Add new dataset
     # @param title Title of the dataset
     # @param content Description of the dataset

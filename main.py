@@ -96,7 +96,7 @@ class Register:
             description="Repeat password:"),
         web.form.Button('send'),
         validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated),
-			 ],
+            ],
     )
 
     def GET(self):
@@ -109,10 +109,10 @@ class Register:
             return render.register(form)
         else:
             res = data.register(form.d.Username,form.d.EMail,form.d.Password)
-            if res:
+            if res == 0:
                 return render.index()
             else:
-                return render.register(form,True)
+                return render.register(form,res)
 
 
 ##############################################################################

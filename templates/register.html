@@ -1,10 +1,14 @@
-$def with(form,error=False)
+$def with(form,error=0)
 
 <h4>Register</h4>
 <form action="" method="post" class="form-group">
 $:form.render()
 </form>
-$if error:
+$if error == 1:
 	<div class="error">
 	Error with registration
+	</div>
+$if error == 2:
+	<div class="error">
+	Username not available
 	</div>
