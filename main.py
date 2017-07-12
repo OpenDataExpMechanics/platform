@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+#@author: patrick@openexpmechanics.science
 import web
 import model
 import md5, os
@@ -35,13 +37,15 @@ t_globals = {
     'session' : session
 }
 
-
-
-
+## Render engine
 render = web.template.render('templates',base='base', globals=t_globals)
 
+## Connector to the database 
 data = model.model(render,session)
 
+##############################################################################
+# Main page of the website
+##############################################################################
 class Index:
     def GET(self):
         return render.index()
