@@ -12,7 +12,7 @@ A platform is therefore needed to share experimental data sets in mechanics,
 rating it with respect to reproducibility and quality of the experimental setup for benchmarks with simulation results. 
 Thus, both communities could enhance the understanding of material behavior and fasten their research.
 
-If you would like to learn even more about the project and how it came to be, please [take a look at the first post on our blog here}(https://opendataexpmechanics.github.io/ODEM-project/).
+If you would like to learn even more about the project and how it came to be, please [take a look at the first post on our blog here](https://opendataexpmechanics.github.io/ODEM-project/).
 
 This document is a set of guidelines for contributing to Open Data for Experimental Mechanics on GitHub. 
 These are guidelines, not rules. This guide is meant to make it easy for you to get involved.
@@ -25,7 +25,7 @@ These are guidelines, not rules. This guide is meant to make it easy for you to 
 
 ## Participation guidelines
 
-This project adheres to a [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [contact@http://openexpmechanics.science](http://openexpmechanics.science/).
+This project adheres to a [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [contact@openexpmechanics.science](contact@openexpmechanics.science/).
 
 ## What we're working on
 
