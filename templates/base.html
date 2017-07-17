@@ -20,8 +20,16 @@ $def with (page)
         color: red;
     }
 
+    .navbar-nav .nav-item .nav-link {
+	display: inline-block;
+    }
+    .navbar-toggler.navbar-toggler-right {
+	background-color: #292b2c;
+    }
+
     .container {
         padding-top: 20px;
+	padding-bottom: 40px;
     }
 
     .footer {
@@ -29,6 +37,39 @@ $def with (page)
         bottom: 0;
         width: 100%;
     }
+
+    .footer a {
+	color: rgba(255,255,255,.5);
+    }
+    .footer a:hover {
+	color: rgba(255,255,255,.75);
+    }
+    .logged-in {
+		color: white;
+        line-height: 40px;
+        text-align: right;
+        flex: 1;
+        padding-right: 10px;
+    }
+
+    table {
+	width: 100%;
+    }
+    table tr {
+	border-top: solid 1px #cccccc;
+    }
+    table tr:last-child {
+	border-bottom: solid 1px #cccccc;
+    }
+    td, th {
+	padding: 5px;
+    }
+    textarea {
+	width: 100%;
+	min-height: 300px;
+	border-color: rgb(238, 238, 238);
+    }
+
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,7 +81,7 @@ $def with (page)
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <img class ="logo-image" src="./assets/logo-highq.png" width=50><a class="navbar-brand" href="#">Open Data for Experimental Mechanics</a>
+  <a class="navbar-brand" href="/"><img class ="logo-image" src="/assets/logo-highq.png" width=50>Open Data for Experimental Mechanics</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
@@ -81,12 +122,9 @@ $:page
         <a class="nav-link" href="https://twitter.com/OpenDataExpMech" target="_blank"><i class="fa fa-home fa-twitter" aria-hidden="true"></i> Twitter</a>
         <a class="nav-link" href="mailto:contact@openexpmechanics.science"><i class="fa fa-home fa-envelope" aria-hidden="true"></i> Mail</a>
         <a class="nav-link" href="https://opendataexpmechanics.github.io/" target="_blank"><i class="fa fa-home fa-newspaper-o" aria-hidden="true"></i> Blog</a>
-    </nav>
-
-
 $if session.get('t_auth') == True:
-    Logged in as $session.get('t_user')
-
+    <span class="logged-in">Logged in as $session.get('t_user')</span>
+    </nav>
 </div>
 </body>
 </html>

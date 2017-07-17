@@ -165,7 +165,6 @@ class New:
             size=30,
             description="Title of the data set:"),
         web.form.Textarea('content', web.form.notnull,
-            rows=30, cols=80,
             description="Description of the data set:"),
         web.form.Textbox('link', web.form.notnull,
             size=30,
