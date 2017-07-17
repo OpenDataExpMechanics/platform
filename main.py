@@ -90,13 +90,14 @@ class Register:
         web.form.Textbox('EMail', web.form.notnull, web.form.regexp('[^@]+@[^@]+\.[^@]+', 'Must be in form of *@*.*'),
             size=30,
             description="E-Mail:"),
-        web.form.Password('Password', web.form.Validator('Must be more at least 8 charcters long', lambda x:int(x)>7),
+        web.form.Password('Password', web.form.Validator('Must be more at least 8 characters long', lambda x:len(x)>7),
             description="Password:"),
-         web.form.Password('PasswordRepeated',web.form.Validator('Must be more at least 8 charcters long', lambda x:int(x)>7),
+         web.form.Password('PasswordRepeated',web.form.Validator('Must be more at least 8 characters long', lambda x:len(x)>7),
             description="Repeat password:"),
         web.form.Button('send'),
-        validators = [web.form.Validator("Passwords didn't match.", lambda i: i.Password == i.PasswordRepeated),
-            ],
+        validators = [
+	    web.form.Validator("Passwords didn't match.", lambda i:i.Password==i.PasswordRepeated),
+        ],
     )
 
     def GET(self):
