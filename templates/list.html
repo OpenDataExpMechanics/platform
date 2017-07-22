@@ -1,4 +1,4 @@
-$def with (posts)
+$def with (posts,form)
 
 <h3>Data sets</h3>
 
@@ -12,5 +12,11 @@ $for post in posts:
         <td><a href="/show/$post.id" >$post.title</a></td>
     </tr>
 </table>
+
+<form action="" method="post" class="form-group">
+$:form.render()
+</form>
+
+
 
 

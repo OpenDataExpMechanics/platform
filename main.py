@@ -3,7 +3,7 @@
 import web
 import model
 import md5, os
-web.config.debug = True
+web.config.debug = False
 
 
 urls = (
@@ -136,6 +136,7 @@ class Delete:
 # Show data sets of a specific user
 ##############################################################################
 class Data:
+    
     def GET(self):
         posts = data.getPosts()
         return render.data(posts)
@@ -144,9 +145,28 @@ class Data:
 # Show data sets
 ##############################################################################
 class List:
+    
+    form = web.form.Form( 
+     web.form.Dropdown('posts', ['All','5','15','50','100'], description="Posts per page"),
+     web.form.Button('show'))
+    
     def GET(self):
+        form = self.form()
         posts = data.getAllPosts()
-        return render.list(posts)
+        return render.list(posts,form)
+    
+    def POST(self):
+        form = self.form()
+        amount = 0
+        formData = web.input()
+        selected = formData['posts']
+        if selected == "All":
+            amount = -1
+        else:
+            amount = int(selected)
+        result = data.getRangePosts(amount,0)
+        return render.list(result,form)
+        
 
 ##############################################################################
 # Show full data set
