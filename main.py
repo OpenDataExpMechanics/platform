@@ -3,8 +3,8 @@
 import web
 import model
 import md5, os
-web.config.debug = False
 
+web.config.debug = False
 
 urls = (
         '/' , 'Index' ,
@@ -40,7 +40,7 @@ t_globals = {
 ## Render engine
 render = web.template.render('templates',base='base', globals=t_globals)
 
-## Connector to the database 
+## Connector to the database
 data = model.model(render,session)
 
 ##############################################################################
@@ -136,7 +136,6 @@ class Delete:
 # Show data sets of a specific user
 ##############################################################################
 class Data:
-    
     def GET(self):
         posts = data.getPosts()
         return render.data(posts)
@@ -145,16 +144,16 @@ class Data:
 # Show data sets
 ##############################################################################
 class List:
-    
-    form = web.form.Form( 
-     web.form.Dropdown('posts', ['All','5','15','50','100'], description="Posts per page"),
-     web.form.Button('show'))
-    
+    form = web.form.Form(
+        web.form.Dropdown('posts', ['All','5','15','50','100'], description="Posts per page"),
+        web.form.Button('show')
+    )
+
     def GET(self):
         form = self.form()
         posts = data.getAllPosts()
         return render.list(posts,form,[])
-    
+
     def POST(self):
         form = self.form()
         amount = 0
@@ -166,7 +165,6 @@ class List:
             amount = int(selected)
         result , pages  = data.getRangePosts(amount,0)
         return render.list(result,form,pages)
-        
 
 ##############################################################################
 # Show full data set
@@ -207,7 +205,7 @@ class New:
                 raise web.seeother('/data')
             else:
                 return render.new(form,True)
-    
+
 ##############################################################################
 # Edit data set
 ##############################################################################
@@ -224,13 +222,13 @@ class Edit:
             description="Link to the data set:"),
         web.form.Button('Save changes')
     )
-    
+
     def GET(self,postID):
         posts = data.getPost(int(postID))[0]
         form = self.form()
         form.fill(posts)
         return render.edit(posts,form)
-    
+
     def POST(self,postID):
         posts = data.getPost(int(postID))[0]
         form = self.form()
@@ -241,8 +239,7 @@ class Edit:
             form.d.link)
         posts = data.getPosts()
         return render.data(posts)
-            
-            
+
 ##############################################################################
 # Serve images
 ##############################################################################
