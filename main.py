@@ -153,7 +153,7 @@ class List:
     def GET(self):
         form = self.form()
         posts = data.getAllPosts()
-        return render.list(posts,form)
+        return render.list(posts,form,[])
     
     def POST(self):
         form = self.form()
@@ -164,8 +164,8 @@ class List:
             amount = -1
         else:
             amount = int(selected)
-        result = data.getRangePosts(amount,0)
-        return render.list(result,form)
+        result , pages  = data.getRangePosts(amount,0)
+        return render.list(result,form,pages)
         
 
 ##############################################################################

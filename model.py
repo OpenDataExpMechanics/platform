@@ -3,6 +3,7 @@
 import web , datetime
 import configuration as conf
 import md5
+import math
 
 ## Class for the connection to the database
 class model():
@@ -113,10 +114,12 @@ class model():
         else:
             data = self.db.query("SELECT count(*) as count FROM datasets")[0]
             count = data['count']
-            print page* amount , page*amount + amount
-            return self.db.query("SELECT * FROM datasets ORDER BY id DESC LIMIT $first,$last",vars={'first':page*amount,'last':amount})
+            length = int(math.ceil(float(count) / float(amount)))
+            pages = []
+            for i in range(1,length+1):
+                pages.append(i)
+            return self.db.query("SELECT * FROM datasets ORDER BY id DESC LIMIT $first,$last",vars={'first':page*amount,'last':amount}) , pages
             
-    
     ## Delete a post by id
     # @param postID Id of the dataset to delete
     def deletePost(self,postID):
