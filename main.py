@@ -14,7 +14,7 @@ urls = (
         '/data' , 'Data' ,
         '/new' , 'New' ,
         '/delete/(\d+)' , 'Delete' ,
-        '/list/(\d*)' , 'List' ,
+        '/list/(\d+,\d+)' , 'List' ,
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
         '/assets/(.*)' , 'images'
@@ -149,10 +149,16 @@ class List:
      web.form.Dropdown('posts', ['All','5','15','50','100'], description="Posts per page"),
      web.form.Button('show'))
     
-    def GET(self,page):
+    def GET(self,values):
         form = self.form()
-        posts = data.getAllPosts()
-        return render.list(posts,form,[])
+        res = values.split(',')
+        amount = int(res[0])
+        if amount == 0:
+             form.posts.value = 'All'
+        else:
+             form.posts.value = amount
+        result , pages  = data.getRangePosts(amount,int(res[1])-1)
+        return render.list(result,form,pages,amount)
     
     def POST(self,page):
         form = self.form()
@@ -161,11 +167,11 @@ class List:
         selected = formData['posts']
         form.posts.value = selected
         if selected == "All":
-            amount = -1
+            amount = 0
         else:
             amount = int(selected)
-        result , pages  = data.getRangePosts(amount,int(page))
-        return render.list(result,form,pages)
+        result , pages  = data.getRangePosts(amount,int(0))
+        return render.list(result,form,pages,amount)
 
 ##############################################################################
 # Show full data set

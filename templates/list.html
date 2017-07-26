@@ -1,4 +1,4 @@
-$def with (posts,form,pages)
+$def with (posts,form,pages,amount)
 
 <h3>Data sets</h3>
 
@@ -18,4 +18,4 @@ $:form.render()
 </form>
 
 $for i in pages:
-   <a href="/list/$i" >$i</a>
+   <a href="/list/$amount,$i" >$i</a>

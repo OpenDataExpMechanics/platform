@@ -109,8 +109,8 @@ class model():
     # @return Range datasets
     def getRangePosts(self,amount,page):
         
-        if amount == -1:
-            return self.db.select('datasets',  order='id DESC' )
+        if amount == 0:
+            return self.db.select('datasets',  order='id DESC' ) , []
         else:
             data = self.db.query("SELECT count(*) as count FROM datasets")[0]
             count = data['count']
