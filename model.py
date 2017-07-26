@@ -3,6 +3,7 @@
 import web , datetime
 import configuration as conf
 import md5
+import math
 
 ## Class for the connection to the database
 class model():
@@ -60,6 +61,7 @@ class model():
                 self.session.t_id = data['id']
                 
                 return 0
+            
     ## Check if username exists
     # @param user Username to validate
     # @return User exists
@@ -101,8 +103,23 @@ class model():
     ## Get all posts
     # @return All datasets
     def getAllPosts(self):
-         return self.db.select('datasets',  order='id DESC' )
-    
+        return self.db.select('datasets',  order='id DESC' )
+     
+    ## Get a range of posts
+    # @return Range datasets
+    def getRangePosts(self,amount,page):
+        
+        if amount == 0:
+            return self.db.select('datasets',  order='id DESC' ) , []
+        else:
+            data = self.db.query("SELECT count(*) as count FROM datasets")[0]
+            count = data['count']
+            length = int(math.ceil(float(count) / float(amount)))
+            pages = []
+            for i in range(1,length+1):
+                pages.append(i)
+            return self.db.query("SELECT * FROM datasets ORDER BY id DESC LIMIT $first,$last",vars={'first':page*amount,'last':amount}) , pages
+            
     ## Delete a post by id
     # @param postID Id of the dataset to delete
     def deletePost(self,postID):

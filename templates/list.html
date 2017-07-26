@@ -1,4 +1,4 @@
-$def with (posts)
+$def with (posts,form,pages,amount)
 
 <h3>Data sets</h3>
 
@@ -13,4 +13,9 @@ $for post in posts:
     </tr>
 </table>
 
+<form action="" method="post" class="form-group inline-form">
+$:form.render()
+</form>
 
+$for i in pages:
+   <a href="/list/$amount,$i" >$i</a>
