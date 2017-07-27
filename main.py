@@ -17,6 +17,7 @@ urls = (
         '/list/(\d+,\d+)' , 'List' ,
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
+        '/search' , 'Search' ,
         '/assets/(.*)' , 'images'
         )
 
@@ -248,6 +249,24 @@ class Edit:
             form.d.link,form.d.tags)
         posts = data.getPosts()
         return render.data(posts)
+
+##############################################################################
+# Search data sets
+##############################################################################
+class Search:
+    
+    def GET(self):
+         form = web.form.Form(
+         web.form.Textbox('title', web.form.notnull,
+            size=30,
+            description="Title contains:"),
+         web.form.Textbox('tags', web.form.notnull,
+            size=30,
+            description="Tags contains (separated by ,):"),
+         web.form.Button('Search'))
+         
+         return render.search(form)
+        
 
 ##############################################################################
 # Serve images
