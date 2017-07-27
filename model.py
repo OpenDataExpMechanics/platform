@@ -79,9 +79,9 @@ class model():
     # @param content Description of the dataset
     # @param link Link to the dataset
     # @return Dataset inserted
-    def new(self,title,content,link):
+    def new(self,title,content,link,tags):
 		try:
-                    self.db.insert('datasets',title=title,link=link,user=self.session.t_id,content=content)
+                    self.db.insert('datasets',title=title,link=link,user=self.session.t_id,content=content,tags=tags)
                 except:
                     return False
 
@@ -131,6 +131,6 @@ class model():
     # @param title Title of the dataset
     # @param content Description of the dataset
     # @param link Link to the dataset
-    def updatePost(self,postID,title,content,link):
+    def updatePost(self,postID,title,content,link,tags):
         self.db.update('datasets', where="id=$postID", vars=locals(),
-        title=title, content=content,link=link)
+        title=title, content=content,link=link,tags=tags)

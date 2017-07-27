@@ -195,6 +195,7 @@ class New:
         web.form.Textbox('link', web.form.notnull,
             size=30,
             description="Link to the data set:"),
+        web.form.Textbox('tags', size=30 ,description="Tags (separated with ,):"),
         web.form.Button('Post data set')
     )
 
@@ -207,7 +208,7 @@ class New:
         if not form.validates():
             return render.new(form)
         else:
-            res = data.new(form.d.title,form.d.content,form.d.link)
+            res = data.new(form.d.title,form.d.content,form.d.link,form.d.tags)
             if res:
                 raise web.seeother('/data')
             else:
@@ -227,6 +228,7 @@ class Edit:
         web.form.Textbox('link', web.form.notnull,
             size=30,
             description="Link to the data set:"),
+        web.form.Textbox('tags', size=30 ,description="Tags (separated with ,):"),
         web.form.Button('Save changes')
     )
 
@@ -243,7 +245,7 @@ class Edit:
         if not form.validates():
             return render.edit(posts, form)
         data.updatePost(int(postID),form.d.title,form.d.content,
-            form.d.link)
+            form.d.link,form.d.tags)
         posts = data.getPosts()
         return render.data(posts)
 
