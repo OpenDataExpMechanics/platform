@@ -255,8 +255,7 @@ class Edit:
 ##############################################################################
 class Search:
     
-    def GET(self):
-         form = web.form.Form(
+    form = web.form.Form(
          web.form.Textbox('title', web.form.notnull,
             size=30,
             description="Title contains:"),
@@ -264,8 +263,16 @@ class Search:
             size=30,
             description="Tags contains (separated by ,):"),
          web.form.Button('Search'))
-         
-         return render.search(form)
+    
+    def GET(self):
+         form = self.form()
+         return render.search(form, [])
+     
+    def POST(self):
+         form = self.form()
+         formData = web.input()
+         posts = data.search(formData['title'],formData['tags'])
+         return render.search(form,posts)
         
 
 ##############################################################################

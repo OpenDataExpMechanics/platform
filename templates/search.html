@@ -1,8 +1,21 @@
-$def with (form)
+$def with (form,posts)
 
 <h3>Search data sets</h3>
 <form action="" method="post" class="form-group">
 $:form.render()
 </form>
 
+$if len(posts) != 0:
+    <table>
+    <tr>
+        <th>Title</th>
+    </tr>
+    $for post in posts:
+        <tr>
+        <td><a href="/show/$post.id " target="_blank" >$post.title</a></td>
+        </tr>
+    </table>
+
 <a href="/">Back</a>
+
+
