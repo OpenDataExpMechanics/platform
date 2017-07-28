@@ -134,3 +134,19 @@ class model():
     def updatePost(self,postID,title,content,link,tags):
         self.db.update('datasets', where="id=$postID", vars=locals(),
         title=title, content=content,link=link,tags=tags)
+        
+    def search(self,title,tags):
+        
+        
+        if len(tags) == 0:
+            title = "%" + str(title) + "%"
+            return self.db.query("SELECT * FROM datasets WHERE title LIKE $title ORDER BY id ",vars={'title':title})
+        if len(title) == 0:
+            tags.replace(",","|")
+            return self.db.query("SELECT * FROM datasets WHERE tags REGEXP $tags ORDER BY id ",vars={'tags':tags})
+        else:
+            title = "%" + str(title) + "%"
+            tags.replace(",","|")
+            return self.db.query("SELECT * FROM datasets WHERE tags REGEXP $tags OR title LIKE $title ORDER BY id ",vars={'tags':tags,'title':title})
+        
+        
