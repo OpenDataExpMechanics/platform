@@ -18,6 +18,7 @@ urls = (
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
         '/search' , 'Search' ,
+        '/tags' , 'Tags' ,
         '/assets/(.*)' , 'images'
         )
 
@@ -196,7 +197,7 @@ class New:
         web.form.Textbox('link', web.form.notnull,
             size=30,
             description="Link to the data set:"),
-        web.form.Textbox('tags', size=30 ,description="Tags (separated with ,):"),
+        web.form.Textbox('tags',  web.form.notnull, size=30 ,description="Tags (separated with ,):"),
         web.form.Button('Post data set')
     )
 
@@ -229,7 +230,7 @@ class Edit:
         web.form.Textbox('link', web.form.notnull,
             size=30,
             description="Link to the data set:"),
-        web.form.Textbox('tags', size=30 ,description="Tags (separated with ,):"),
+        web.form.Textbox('tags',  web.form.notnull, size=30 ,description="Tags (separated with ,):"),
         web.form.Button('Save changes')
     )
 
@@ -273,6 +274,16 @@ class Search:
          formData = web.input()
          posts = data.search(formData['title'],formData['tags'])
          return render.search(form,posts)
+     
+##############################################################################
+# Search data sets
+##############################################################################
+class Tags:
+    
+    def GET(self):
+        
+        tags = data.tags()
+        return render.tags(tags)
         
 
 ##############################################################################

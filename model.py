@@ -4,6 +4,7 @@ import web , datetime
 import configuration as conf
 import md5
 import math
+from collections import OrderedDict
 
 ## Class for the connection to the database
 class model():
@@ -134,9 +135,12 @@ class model():
     def updatePost(self,postID,title,content,link,tags):
         self.db.update('datasets', where="id=$postID", vars=locals(),
         title=title, content=content,link=link,tags=tags)
-        
+    
+    ## Search data sets for tags and title
+    # @param title Text which is contained in the title of the data set
+    # @param tags Text which is contained in the tags of a data set
+    # @return All data sets containing these attributes
     def search(self,title,tags):
-        
         
         if len(tags) == 0:
             title = "%" + str(title) + "%"
@@ -148,5 +152,20 @@ class model():
             title = "%" + str(title) + "%"
             tags.replace(",","|")
             return self.db.query("SELECT * FROM datasets WHERE tags REGEXP $tags OR title LIKE $title ORDER BY id ",vars={'tags':tags,'title':title})
+    
+    
+    def tags(self):
+        
+        tags = []
+        
+        res = self.db.select('datasets' , what='tags')
+        
+        for r in res:
+            tmp = str(r['tags']).split(',')
+            for t in tmp:
+                tags.append(t)
+                
+        
+        return sorted(list(set(tags)))
         
         
