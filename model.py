@@ -34,6 +34,7 @@ class model():
 			self.session.t_user = name 
 			self.session.t_auth = True
 			self.session.t_id = data['id']
+			self.session.t_upload = data['fileupload']
 
 		return True
     

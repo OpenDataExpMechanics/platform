@@ -21,6 +21,7 @@ urls = (
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
         '/search' , 'Search' ,
+        '/files' , 'Files' ,
         '/tags/(.*)' , 'Tags' ,
         '/assets/(.*)' , 'images'
         )
@@ -29,7 +30,7 @@ urls = (
 # Object handling the session of a user
 app = web.application(urls, globals())
 if web.config.get('_session') is None:
-    session = web.session.Session(app,web.session.DiskStore('sessions'),initializer=  {'t_user': '', 't_auth':False,'t_level':0,'t_id':-1})
+    session = web.session.Session(app,web.session.DiskStore('sessions'),initializer=  {'t_user': '', 't_auth':False,'t_upload':False,'t_id':-1})
     web.config._session = session
 else:
     session = web.config._session
@@ -300,6 +301,19 @@ class Tags:
         else:
             posts = []
         return render.tags(tags,posts)
+    
+##############################################################################
+# Search data sets
+##############################################################################
+class Files:
+    
+    def GET(self):
+        
+        return render.files()
+    
+    def POST(self):
+        
+        return render.files()
         
 
 ##############################################################################
