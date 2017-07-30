@@ -1,0 +1,20 @@
+$def with (tags,posts)
+
+<h3>Available tags</h3>
+
+
+$for t in tags:
+    <a href="/tags/$t" >$t</a>
+    
+$if len(posts) != 0:
+    <table>
+    <tr>
+        <th>Title</th>
+    </tr>
+    $for post in posts:
+        <tr>
+        <td><a href="/show/$post.id " target="_blank" >$post.title</a></td>
+        </tr>
+    </table>
+    
+
