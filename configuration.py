@@ -19,3 +19,5 @@ class configuration:
             self.dbType= doc["Database"]["Type"]
             ## Host of the database
             self.host= doc["Database"]["Host"]
+            ## Max file size for upload
+            self.size = doc["File"]["Max"]

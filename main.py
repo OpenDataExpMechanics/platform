@@ -4,6 +4,8 @@
 import web
 import model
 import md5, os
+import cgi
+import configuration as conf
 
 web.config.debug = False
 
@@ -43,8 +45,12 @@ t_globals = {
 ## Render engine
 render = web.template.render('templates',base='base', globals=t_globals)
 
+## Configuration loaded from the yaml file
+conf = conf.configuration()
+cgi.maxlen = conf.size
+
 ## Connector to the database
-data = model.model(render,session)
+data = model.model(render,session,conf)
 
 ##############################################################################
 # Main page of the website

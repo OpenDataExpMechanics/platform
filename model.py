@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 #@author: patrick@openexpmechanics.science
 import web , datetime
-import configuration as conf
 import md5
 import math
 
@@ -11,15 +10,14 @@ class model():
     ## Constructor
     # @param render Render engine
     # @param session Session of the current user
-    def __init__(self,render,session):
+    # @param conf Configuration
+    def __init__(self,render,session, conf):
         ## Render engine
         self.render = render
         ## Session of the current user
         self.session = session
-        ## Configuration loaded from the yaml file
-        self.conf = conf.configuration()
         ## Connector to the databse
-        self.db = web.database(dbn=self.conf.dbType , db=self.conf.database, pw=self.conf.password, user=self.conf.username,host=self.conf.host)
+        self.db = web.database(dbn=conf.dbType , db=conf.database, pw=conf.password, user=conf.username,host=conf.host)
 
     ## Login
     # @param name Username
