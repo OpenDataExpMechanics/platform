@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #-*- coding: utf-8 -*-
 #@author: patrick@openexpmechanics.science
 import web
