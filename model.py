@@ -4,7 +4,6 @@ import web , datetime
 import configuration as conf
 import md5
 import math
-from collections import OrderedDict
 
 ## Class for the connection to the database
 class model():
@@ -153,7 +152,8 @@ class model():
             tags.replace(",","|")
             return self.db.query("SELECT * FROM datasets WHERE tags REGEXP $tags OR title LIKE $title ORDER BY id ",vars={'tags':tags,'title':title})
     
-    
+    ## Get all tags 
+    # @ return All available tags
     def tags(self):
         
         tags = []
@@ -165,7 +165,14 @@ class model():
             for t in tmp:
                 tags.append(t)
                 
-        
+        tags.append('All')
         return sorted(list(set(tags)))
+    
+    ## Get all data sets with the provided tag
+    # @param name Name of the tag
+    # @return All datasets containing this tag
+    def getPostsByTag(self,name):
+        name = "%" + str(name) + "%"
+        return self.db.query("SELECT * FROM datasets WHERE tags LIKE $name ORDER BY id ",vars={'name':name})
         
         

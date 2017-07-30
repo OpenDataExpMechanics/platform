@@ -18,7 +18,7 @@ urls = (
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
         '/search' , 'Search' ,
-        '/tags' , 'Tags' ,
+        '/tags/(.*)' , 'Tags' ,
         '/assets/(.*)' , 'images'
         )
 
@@ -280,10 +280,19 @@ class Search:
 ##############################################################################
 class Tags:
     
-    def GET(self):
+    def GET(self,name):
         
         tags = data.tags()
-        return render.tags(tags)
+        print name
+        if name == "All":
+            print 'All'
+            posts = data.getAllPosts()
+        elif len(name) > 0:
+            print 'tag'
+            posts = data.getPostsByTag(name)
+        else:
+            posts = []
+        return render.tags(tags,posts)
         
 
 ##############################################################################
