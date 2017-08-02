@@ -7,6 +7,7 @@ $def with (posts)
   <tr>
     <th>Title</th>
     <th>Edit</th>
+    <th>Show</th>
     <th>Delete</th>
   </tr>
 $for post in posts:
@@ -14,6 +15,9 @@ $for post in posts:
         <td>$post.title</td>
         <td>
         <a href="/edit/$post.id"><i class="fa fa-pencil" aria-hidden="true" ></i></a>   
+        </td>
+         <td>
+         <a href="/show/$post.id" target="_blank"><i class="fa  fa-info-circle" aria-hidden="true"></i></a>
         </td>
         <td>
          <a href="/delete/$post.id"><i class="fa  fa-close" aria-hidden="true"></i></a>
