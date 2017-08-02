@@ -66,6 +66,7 @@ Retart mysql server.
 * pyaml
 * MySQL-python
 * web.py
+* python-magic
 
 Installing the necessary python packages is pretty straight forward. A file called `requirements.txt` is in the repository. Go to the repository folder and execute:
 
@@ -83,6 +84,10 @@ Database:
     Password:
     Type: mysql
     Host:
+File:
+    Max:
+    Path: Path where the files are stored locally
+    Types: Allowed mimi types
 ```
 
 ## Start the platform

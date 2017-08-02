@@ -21,3 +21,7 @@ class configuration:
             self.host= doc["Database"]["Host"]
             ## Max file size for upload
             self.size = doc["File"]["Max"]
+            ## Path for storing uploaded data
+            self.path = doc["File"]["Path"]
+            ## Allowed file types for upload
+            self.types = doc["File"]["Types"].split(',')

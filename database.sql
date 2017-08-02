@@ -17,9 +17,10 @@ CREATE TABLE IF NOT EXISTS `datasets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(25) NOT NULL,
   `content` text NOT NULL,
-  `link` varchar(512) NOT NULL,
+  `link` varchar(512) DEFAULT 'None',
   `user` int(11) NOT NULL,
-  `tags` varchar(512),
+  `tags` varchar(512) NOT NULL,
+  `file` VARCHAR(2048) DEFAULT 'None',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

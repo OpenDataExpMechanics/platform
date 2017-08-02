@@ -6,6 +6,9 @@ import model
 import md5, os
 import cgi
 import configuration as conf
+import magic
+import shutil
+import uuid
 
 web.config.debug = False
 
@@ -138,7 +141,7 @@ class Logout:
 # Delete
 ##############################################################################
 class Delete:
-    def POST(self,postID):
+    def GET(self,postID):
         data.deletePost(int(postID))
         raise web.seeother('/data')
 
@@ -306,14 +309,48 @@ class Tags:
 # Search data sets
 ##############################################################################
 class Files:
-    
+        
     def GET(self):
         
-        return render.files()
+        res = data.getPostsWithoutFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+        
+        #files = data.getFiles()
+        
+        return render.files(title,0)
     
     def POST(self):
         
-        return render.files()
+        res = data.getPostsWithoutFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+        
+        # Check for the maximal file size
+        try:
+            i = web.input(myfile={})
+        except ValueError:
+            return render.files(title,1)
+        
+        # Check for the mime time
+        fileType = magic.from_buffer(i['myfile'].file.read(), mime=True)
+        
+        if fileType not in conf.types:
+            return render.files(title,2)
+        
+        filedir = str(conf.path) + "/" + str(uuid.uuid1()) + ".zip"
+      
+        fout = open(filedir,'w')
+        fout.write(i['myfile'].file.read())
+        fout.close()
+        
+        data.addFile(i["title"],filedir)
+
+        return render.files(title,0)
         
 
 ##############################################################################

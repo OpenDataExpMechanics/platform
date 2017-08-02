@@ -3,6 +3,7 @@
 import web , datetime
 import md5
 import math
+import os
 
 ## Class for the connection to the database
 class model():
@@ -123,6 +124,12 @@ class model():
     # @param postID Id of the dataset to delete
     def deletePost(self,postID):
         var = dict(user=self.session.t_id,id=postID)
+        
+        res = self.db.query("SELECT file FROM datasets WHERE id=$id AND user=$user",vars=var)[0]
+        
+        if not res["file"] == "None":
+                os.remove(res["file"])
+        
         self.db.delete('datasets', where="id=$id AND user=$user", vars=var)
     
     ## Update a dataset
@@ -173,5 +180,23 @@ class model():
     def getPostsByTag(self,name):
         name = "%" + str(name) + "%"
         return self.db.query("SELECT * FROM datasets WHERE tags LIKE $name ORDER BY id ",vars={'name':name})
+    
+    ## Add a file to an existing data set
+    # @param title Title of the dataset
+    # @param filename Path to the file and name of the file
+    def addFile(self,title,filename):
+        
+        self.db.query("Update datasets SET file=$filename WHERE title=$title AND user=$user",vars={'filename':filename,'title':title,'user':self.session.t_id})
+
+    ## Get post of a specific user which have no files
+    # @return All posts without files
+    def getPostsWithoutFiles(self):
+        
+        return self.db.query("Select title FROM datasets WHERE user=$user AND file LIKE 'None'",vars={'user':self.session.t_id})
+    
+    
+    
+    def getFiles(self,):
+        return self.db.query("SELECT * FROM datasets WHERE file NOT LIKE 'None' ORDER BY id ")
         
         
