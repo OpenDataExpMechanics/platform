@@ -85,6 +85,9 @@ $def with (page)
         flex: 1;
     }
 
+    .header-text {
+        font-size: small;
+    }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -104,34 +107,34 @@ $def with (page)
             <li class="nav-item active">
         $else:
             <li class="nav-item">
-          <a class="nav-link" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+          <a class="nav-link" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i></br><div class="header-text">Home</div></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="/list/0,0"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>All data</a>
+          <a class="nav-link" href="/list/0,0"><i class="fa fa-folder fa-fw" aria-hidden="true"></i></br><div class="header-text">All data</div></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="/search"><i class="fa fa-search fa-fw" aria-hidden="true"></i>Search</a>
+          <a class="nav-link" href="/search"><i class="fa fa-search fa-fw" aria-hidden="true"></i></br><div class="header-text">Search</div></a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="/tags/"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>Tags</a>
+          <a class="nav-link" href="/tags/"><i class="fa fa-tags fa-fw" aria-hidden="true"></i></br><div class="header-text">Tags</div></a>
       </li>
       $if session.get('t_auth') == False:
           <li class="nav-item">
-              <a class="nav-link" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>Log in</a>
+              <a class="nav-link" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i></br><div class="header-text">Log in</div></a>
           </li>
       $else:
         <li class="nav-item">
-            <a class="nav-link" href="/new"><i class="fa fa-plus  fa-fw" aria-hidden="true"></i>New</a><br>
+            <a class="nav-link" href="/new"><i class="fa fa-plus  fa-fw" aria-hidden="true"></i></br><div class="header-text">New</div></a><br>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/data"><i class="fa fa-folder fa-fw" aria-hidden="true"></i>My data</a><br>
+            <a class="nav-link" href="/data"><i class="fa fa-folder fa-fw" aria-hidden="true"></i></br><div class="header-text">My data</div></a><br>
         </li>
         $if session.get('t_upload') == True:
             <li class="nav-item">
-            <a class="nav-link" href="/files"><i class="fa fa-file fa-fw" aria-hidden="true"></i>My files</a><br>
+            <a class="nav-link" href="/files"><i class="fa fa-file fa-fw" aria-hidden="true"></i></br><div class="header-text">My files</div></a><br>
             </li>
         <li class="nav-item">
-            <a class="nav-link" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Log out</a>
+            <a class="nav-link" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></br><div class="header-text">Log out</div></a>
         </li>
     </ul>
   </div>
