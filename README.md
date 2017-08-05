@@ -76,6 +76,11 @@ Installing the necessary python packages is pretty straight forward. A file call
 ### Configuration
 
 Please provide in the main directory a yaml file with these attributes for the connection to the database.
+You can copy the example provided in the repository to use it as a configuration file doing:
+
+`cp conf.yaml.example conf.yaml`
+
+You should then edit the `conf.yaml` file and adapt it for your setup.
 
 ```yaml
 Database:
