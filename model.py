@@ -195,8 +195,19 @@ class model():
         return self.db.query("Select title FROM datasets WHERE user=$user AND file LIKE 'None'",vars={'user':self.session.t_id})
     
     
+    ## Get all post with files from a specific user
+    # @return All datasets of a specific user with files
+    def getFiles(self):
+        return self.db.query("SELECT id,title FROM datasets WHERE file NOT LIKE 'None' AND user=$user ORDER BY id ",vars={'user':self.session.t_id})
     
-    def getFiles(self,):
-        return self.db.query("SELECT * FROM datasets WHERE file NOT LIKE 'None' ORDER BY id ")
+    ## Delte the file of the dataset with id
+    # @param postID Id of the dataset
+    def deleteFile(self,postID):
+        
+        res = self.db.query("SELECT file FROM datasets WHERE user=$user AND id=$id ",vars={'id':postID,'user':self.session.t_id})[0]
+        
+        os.remove(res["file"])
+        
+        self.db.query("Update datasets SET file='None' WHERE user=$user AND id=$id",vars={'id':postID,'user':self.session.t_id})
         
         

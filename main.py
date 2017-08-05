@@ -23,6 +23,7 @@ urls = (
         '/list/(\d+,\d+)' , 'List' ,
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
+        '/deleteFile/(\d+)' , 'DeleteFile' ,
         '/search' , 'Search' ,
         '/files' , 'Files' ,
         '/tags/(.*)' , 'Tags' ,
@@ -318,13 +319,15 @@ class Files:
         for r in res:
             title.append(r.title)
         
-        #files = data.getFiles()
+        filedata = data.getFiles()
         
-        return render.files(title,0)
+        return render.files(title,filedata,0)
     
     def POST(self):
         
         res = data.getPostsWithoutFiles()
+        
+        filedata = data.getFiles()
         
         title = []
         for r in res:
@@ -334,7 +337,7 @@ class Files:
         try:
             i = web.input(myfile={})
         except ValueError:
-            return render.files(title,1)
+            return render.files(title,filedata,1)
         
         # Check for the mime time
         fileType = magic.from_buffer(i['myfile'].file.read(), mime=True)
@@ -349,9 +352,27 @@ class Files:
         fout.close()
         
         data.addFile(i["title"],filedir)
-
-        return render.files(title,0)
         
+        return render.files(title,filedata,0)
+        
+##############################################################################
+# Delete a file
+##############################################################################
+class DeleteFile:
+    
+    def GET(self,postId):
+        
+        res = data.getPostsWithoutFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+            
+        filedata = data.getFiles()
+            
+        data.deleteFile(int(postId))
+        
+        return render.files(title,filedata,0)
 
 ##############################################################################
 # Serve images
