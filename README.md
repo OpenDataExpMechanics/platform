@@ -66,6 +66,7 @@ Retart mysql server.
 * pyaml
 * MySQL-python
 * web.py
+* python-magic
 
 Installing the necessary python packages is pretty straight forward. A file called `requirements.txt` is in the repository. Go to the repository folder and execute:
 
@@ -75,6 +76,11 @@ Installing the necessary python packages is pretty straight forward. A file call
 ### Configuration
 
 Please provide in the main directory a yaml file with these attributes for the connection to the database.
+You can copy the example provided in the repository to use it as a configuration file doing:
+
+`cp conf.yaml.example conf.yaml`
+
+You should then edit the `conf.yaml` file and adapt it for your setup.
 
 ```yaml
 Database:
@@ -83,6 +89,10 @@ Database:
     Password:
     Type: mysql
     Host:
+File:
+    Max:
+    Path: Path where the files are stored locally
+    Types: Allowed mimi types
 ```
 
 ## Start the platform

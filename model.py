@@ -1,9 +1,9 @@
 #-*- coding: utf-8 -*-
 #@author: patrick@openexpmechanics.science
 import web , datetime
-import configuration as conf
 import md5
 import math
+import os
 
 ## Class for the connection to the database
 class model():
@@ -11,15 +11,14 @@ class model():
     ## Constructor
     # @param render Render engine
     # @param session Session of the current user
-    def __init__(self,render,session):
+    # @param conf Configuration
+    def __init__(self,render,session, conf):
         ## Render engine
         self.render = render
         ## Session of the current user
         self.session = session
-        ## Configuration loaded from the yaml file
-        self.conf = conf.configuration()
         ## Connector to the databse
-        self.db = web.database(dbn=self.conf.dbType , db=self.conf.database, pw=self.conf.password, user=self.conf.username,host=self.conf.host)
+        self.db = web.database(dbn=conf.dbType , db=conf.database, pw=conf.password, user=conf.username,host=conf.host)
 
     ## Login
     # @param name Username
@@ -36,6 +35,7 @@ class model():
 			self.session.t_user = name 
 			self.session.t_auth = True
 			self.session.t_id = data['id']
+			self.session.t_upload = data['fileupload']
 
 		return True
     
@@ -124,6 +124,12 @@ class model():
     # @param postID Id of the dataset to delete
     def deletePost(self,postID):
         var = dict(user=self.session.t_id,id=postID)
+        
+        res = self.db.query("SELECT file FROM datasets WHERE id=$id AND user=$user",vars=var)[0]
+        
+        if not res["file"] == "None":
+                os.remove(res["file"])
+        
         self.db.delete('datasets', where="id=$id AND user=$user", vars=var)
     
     ## Update a dataset
@@ -174,5 +180,34 @@ class model():
     def getPostsByTag(self,name):
         name = "%" + str(name) + "%"
         return self.db.query("SELECT * FROM datasets WHERE tags LIKE $name ORDER BY id ",vars={'name':name})
+    
+    ## Add a file to an existing data set
+    # @param title Title of the dataset
+    # @param filename Path to the file and name of the file
+    def addFile(self,title,filename):
+        
+        self.db.query("Update datasets SET file=$filename WHERE title=$title AND user=$user",vars={'filename':filename,'title':title,'user':self.session.t_id})
+
+    ## Get post of a specific user which have no files
+    # @return All posts without files
+    def getPostsWithoutFiles(self):
+        
+        return self.db.query("Select title FROM datasets WHERE user=$user AND file LIKE 'None'",vars={'user':self.session.t_id})
+    
+    
+    ## Get all post with files from a specific user
+    # @return All datasets of a specific user with files
+    def getFiles(self):
+        return self.db.query("SELECT id,title FROM datasets WHERE file NOT LIKE 'None' AND user=$user ORDER BY id ",vars={'user':self.session.t_id})
+    
+    ## Delte the file of the dataset with id
+    # @param postID Id of the dataset
+    def deleteFile(self,postID):
+        
+        res = self.db.query("SELECT file FROM datasets WHERE user=$user AND id=$id ",vars={'id':postID,'user':self.session.t_id})[0]
+        
+        os.remove(res["file"])
+        
+        self.db.query("Update datasets SET file='None' WHERE user=$user AND id=$id",vars={'id':postID,'user':self.session.t_id})
         
         

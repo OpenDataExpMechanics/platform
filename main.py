@@ -4,6 +4,11 @@
 import web
 import model
 import md5, os
+import cgi
+import configuration as conf
+import magic
+import shutil
+import uuid
 
 web.config.debug = False
 
@@ -18,7 +23,9 @@ urls = (
         '/list/(\d+,\d+)' , 'List' ,
         '/edit/(\d+)' , 'Edit' ,
         '/show/(\d+)' , 'Show' ,
+        '/deleteFile/(\d+)' , 'DeleteFile' ,
         '/search' , 'Search' ,
+        '/files' , 'Files' ,
         '/tags/(.*)' , 'Tags' ,
         '/assets/(.*)' , 'images'
         )
@@ -27,7 +34,7 @@ urls = (
 # Object handling the session of a user
 app = web.application(urls, globals())
 if web.config.get('_session') is None:
-    session = web.session.Session(app,web.session.DiskStore('sessions'),initializer=  {'t_user': '', 't_auth':False,'t_level':0,'t_id':-1})
+    session = web.session.Session(app,web.session.DiskStore('sessions'),initializer=  {'t_user': '', 't_auth':False,'t_upload':False,'t_id':-1})
     web.config._session = session
 else:
     session = web.config._session
@@ -43,8 +50,12 @@ t_globals = {
 ## Render engine
 render = web.template.render('templates',base='base', globals=t_globals)
 
+## Configuration loaded from the yaml file
+conf = conf.configuration()
+cgi.maxlen = conf.size
+
 ## Connector to the database
-data = model.model(render,session)
+data = model.model(render,session,conf)
 
 ##############################################################################
 # Main page of the website
@@ -131,7 +142,7 @@ class Logout:
 # Delete
 ##############################################################################
 class Delete:
-    def POST(self,postID):
+    def GET(self,postID):
         data.deletePost(int(postID))
         raise web.seeother('/data')
 
@@ -294,7 +305,74 @@ class Tags:
         else:
             posts = []
         return render.tags(tags,posts)
+    
+##############################################################################
+# Search data sets
+##############################################################################
+class Files:
         
+    def GET(self):
+        
+        res = data.getPostsWithoutFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+        
+        filedata = data.getFiles()
+        
+        return render.files(title,filedata,0)
+    
+    def POST(self):
+        
+        res = data.getPostsWithoutFiles()
+        
+        filedata = data.getFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+        
+        # Check for the maximal file size
+        try:
+            i = web.input(myfile={})
+        except ValueError:
+            return render.files(title,filedata,1)
+        
+        # Check for the mime time
+        fileType = magic.from_buffer(i['myfile'].file.read(), mime=True)
+        
+        if fileType not in conf.types:
+            return render.files(title,2)
+        
+        filedir = str(conf.path) + "/" + str(uuid.uuid1()) + ".zip"
+      
+        fout = open(filedir,'w')
+        fout.write(i['myfile'].file.read())
+        fout.close()
+        
+        data.addFile(i["title"],filedir)
+        
+        return render.files(title,filedata,0)
+        
+##############################################################################
+# Delete a file
+##############################################################################
+class DeleteFile:
+    
+    def GET(self,postId):
+        
+        res = data.getPostsWithoutFiles()
+        
+        title = []
+        for r in res:
+            title.append(r.title)
+            
+        filedata = data.getFiles()
+            
+        data.deleteFile(int(postId))
+        
+        return render.files(title,filedata,0)
 
 ##############################################################################
 # Serve images

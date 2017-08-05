@@ -7,9 +7,13 @@ $for post in posts:
     $post.content
     <br><br>
     Tags: $post.tags
+$if post.link != 'None':
     <br><br>
-    More details can be found <a href="$post.link">here</a>
+        More details can be found <a href="$post.link">here</a>
+$if post.file != 'None':
     <br><br>
+    Archive can be donloaded here <a href="$post.file">here</a>
+
 
 
      
