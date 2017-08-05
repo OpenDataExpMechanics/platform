@@ -1,5 +1,11 @@
 $def with (posts,form,pages,amount)
 
+<style type="text/css">
+#element1 {float:left;}
+#element2 {margin-left : 20px;float:left;}
+</style>
+
+
 <h3>Data sets</h3>
 
 
@@ -13,9 +19,12 @@ $for post in posts:
     </tr>
 </table>
 
+<div id="element1">
 <form action="" method="post" class="form-group inline-form">
 $:form.render()
 </form>
-
+</div>
+<div id="element2">
 $for i in pages:
    <a href="/list/$amount,$i" >$i</a>
+</div>
